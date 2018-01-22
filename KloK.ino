@@ -343,19 +343,18 @@ void midiClockTick(){
 
     // Midi
     if (clockCounter == 1) {
-        showSongPos();
+      // Resync mode.
+      if (sendResync) {
+          MIDI.sendSongPosition(songPointerPos);
+          MIDI.sendRealTime(midi::Start);
+          sendResync = false;
+      }      
+      showSongPos();
     }
     else if (clockCounter == 6 )  {  songPointerPos++; showSongPos();}
     else if (clockCounter == 12 ) {  songPointerPos++; showSongPos();}
     else if (clockCounter == 18 ) {  songPointerPos++; showSongPos();}
-    else if (clockCounter >= 24 ) {  clockCounter = 0 ; songPointerPos++; showSongPos();}
-  }
-  // Resync mode
-  if (sendResync) {
-//    songPointerPos = 0;
-      MIDI.sendSongPosition(songPointerPos);
-      //MIDI.sendRealTime(midi::Start);
-      sendResync = false;
+    else if (clockCounter >= 24 ) {  clockCounter = 0 ; songPointerPos++; showSongPos();  }
   }
 }
 // ---------------------------------------------------------------------------------
