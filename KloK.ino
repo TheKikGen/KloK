@@ -2,6 +2,7 @@
   KiKlok PROJECT.  An accurate MIDI clock generator
   Franck Touanen - Dec 2017.
 ************************************************************************************/
+#define ENCODER_USED   // Encoder Pin. Comment if not using an encoder
 
 #include <string.h>
 #include "build_number_defines.h"
@@ -10,6 +11,9 @@
 #include <LiquidCrystal.h>
 #include <PulseOut.h>
 #include <HIObjects.h>
+#ifdef ENCODER_USED
+#include <Rotary.h>
+#endif
 
 // =================================================================================
 // DEFINES
@@ -17,10 +21,8 @@
 
 #define LED           13
 #define CVGATE_PIN    17  // A3
-#define ENCODER_USED   // Encoder Pin. Comment if not using an encoder
 
 #ifdef ENCODER_USED
-#include <Rotary.h>
 #define ENCODER_INTERRUPT_A 0
 #define ENCODER_INTERRUPT_B 1
 #define ENCODER_PIN_A 2
@@ -61,9 +63,9 @@ PulseOut      CVPulse(CVGATE_PIN,15);     // Used to generate a pulse for CV gat
 HILCDKeypad   LCDKeypad(0);               // Define a keypad on pin 0
 
 #ifdef ENCODER_USED
-HIPushButton  btnEncoder(ENCODER_PIN_PUSH);         // Used to catch the push mode of the encoder
-volatile int encoder_position = 120;      // Used by the interrupt
-int current_encoder_position  = 120;      //
+HIPushButton  btnEncoder(ENCODER_PIN_PUSH); // Used to catch the push mode of the encoder
+volatile int encoder_position = 120;        // Used by the interrupt
+int current_encoder_position  = 120;        //
 Rotary encoder = Rotary(ENCODER_PIN_A, ENCODER_PIN_B);
 #endif
 
@@ -348,7 +350,7 @@ void midiClockTick(){
           MIDI.sendSongPosition(songPointerPos);
           MIDI.sendRealTime(midi::Start);
           sendResync = false;
-      }      
+      }
       showSongPos();
     }
     else if (clockCounter == 6 )  {  songPointerPos++; showSongPos();}
