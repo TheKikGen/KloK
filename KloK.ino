@@ -401,7 +401,25 @@ void showBuild() {
  lcd.print(TimestampedVersion);
 }
 
+void showSplash() {
+writeBigString("KLOK", 0, 0);
+delay(500);
+
+for (int i=1; i<= 4 ; i++   ) {
+
+ lcd.scrollDisplayLeft();
+ delay(200);
+}
+
+for (int i=4; i>=1;i--  ) {
+ delay(200);
+ lcd.scrollDisplayRight();
+}
+delay(1000);
+}
+
 void showWelcome() {
+
  showBuild();
  delay(3000);
  showFreeRam();
@@ -482,9 +500,9 @@ void setup()   {
     lcd.createChar ( nb+1, bb );
   }
 
- writeBigString("  KLOK", 0, 0);
- delay(3000);
- lcd.clear();
+
+ showSplash();
+
  // Prepare specials LCD characters
  lcd.createChar(CHARPLAY, char_Play);  lcd.createChar(CHARPAUSE, char_Pause);  lcd.createChar(CHARSTOP, char_Stop);
  lcd.createChar(CHARBAR1, char_Bar1);  lcd.createChar(CHARBAR2, char_Bar2);
