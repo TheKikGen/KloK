@@ -1,6 +1,6 @@
 /**********************************************************************************
   KiKlok PROJECT.  An accurate MIDI clock generator
-  Franck Touanen - Dec 2017.
+  TheKikGen Labs - Dec 2017.
 ************************************************************************************/
 #define ENCODER_USED   // Encoder Pin. Comment if not using an encoder
 
